@@ -16,15 +16,14 @@ export const fetchComments = async () => {
   }
 };
 
-export const fetchDesigners = async (params = {}) => {
+export const fetchDesigners = async (params: { page?: number; limit?: number }) => {
   try {
     const response = await axios.get(`${API_URL}/designer`, {
       params: {
-        limit: 10,
         ...params,
       },
     });
-    return response.data.results;
+    return response.data;
   } catch (error) {
     console.error('Error fetching designers:', error);
     throw error;

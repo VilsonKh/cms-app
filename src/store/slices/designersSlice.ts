@@ -6,22 +6,24 @@ interface Designer {
   avatar: string;
   name: string;
   email: string;
-  closedTasks: number;
-  inProgressTasks: number;
+  issues: []
 }
 
 interface DesignersState {
-  list: Designer[];
+  list: {
+    count?: number,
+    results?: Designer[],
+  },
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
 }
 
 const initialState: DesignersState = {
-  list: [],
+  list: {},
   status: 'idle',
 };
 
-export const getDesigners = createAsyncThunk<Designer[]>('designers/getDesigners', async () => {
-  const response = await fetchDesigners();
+export const getDesigners = createAsyncThunk<Designer[]>('designers/getDesigners', async (params) => {
+  const response = await fetchDesigners(params);
   return response;
 });
 

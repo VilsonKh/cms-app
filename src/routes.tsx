@@ -31,7 +31,7 @@ const router = createBrowserRouter([
         element: <Tasks />,
       },
       {
-        path: '/designer',
+        path: '/designers',
         element: <Designer />,
       },
     ],
