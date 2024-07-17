@@ -1,13 +1,8 @@
 import React from 'react';
 import { TableCell, TableRow, TableSortLabel, TableHead } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
-const headCells = [
-  { id: 'avatar', label: 'Avatar', sortable: false },
-  { id: 'username', label: 'Name', sortable: true },
-  { id: 'email', label: 'Email', sortable: true },
-  { id: 'tasksClosed', label: 'Tasks Closed', sortable: false },
-  { id: 'tasksInProgress', label: 'Tasks In Progress', sortable: false },
-];
+
 
 interface DesignerTableHeadProps {
   order: 'asc' | 'desc';
@@ -16,6 +11,16 @@ interface DesignerTableHeadProps {
 }
 
 const DesignerTableHead: React.FC<DesignerTableHeadProps> = ({ order, orderBy, onRequestSort }) => {
+
+  const {t}=useTranslation()
+
+  const headCells = [
+    { id: 'avatar', label: t('Avatar'), sortable: false },
+    { id: 'username', label: t('Name'), sortable: true },
+    { id: 'email', label:'Email', sortable: true },
+    { id: 'tasksClosed', label: t('Tasks Closed'), sortable: false },
+    { id: 'tasksInProgress', label: t('Tasks In Progress'), sortable: false },
+  ];
   const createSortHandler = (property: 'username' | 'email') => (event: React.MouseEvent<unknown>) => {
     onRequestSort(property);
   };

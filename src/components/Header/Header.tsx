@@ -2,12 +2,13 @@ import React from "react";
 import { AppBar, Toolbar, Typography, Switch, Select, MenuItem, Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { useTheme } from "../../themeContext/themeContext";
 
-const Header: React.FC<{ setDarkMode: React.Dispatch<React.SetStateAction<boolean>>; darkMode: boolean }> = ({ setDarkMode, darkMode }) => {
+
+const Header = () => {
 	const { t, i18n } = useTranslation();
-	const handleThemeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setDarkMode(event.target.checked);
-	};
+	const {darkMode, toggleDarkMode} = useTheme()
+
 
 	return (
 		<AppBar position="static">
@@ -15,31 +16,31 @@ const Header: React.FC<{ setDarkMode: React.Dispatch<React.SetStateAction<boolea
 				<Typography
 					variant="h6"
 					style={{ flexGrow: 1 }}
-          component={Link}
-          to={"/"}
+					component={Link}
+					to={"/"}
 				>
 					CRM System
 				</Typography>
 				<Button
 					color="inherit"
 					style={{ marginRight: "16px" }}
-          component={Link}
-          to="/tasks"
+					component={Link}
+					to="/tasks"
 				>
-          Tasks
+					{t("tasks")}
 				</Button>
-        <Button
+				<Button
 					color="inherit"
 					style={{ marginRight: "16px" }}
-          component={Link}
-          to="/designers"
+					component={Link}
+					to="/designers"
 				>
-          Designers 
+					{t("designers")}
 				</Button>
 				<Switch
 					color="default"
 					checked={darkMode}
-					onChange={handleThemeChange}
+					onChange={toggleDarkMode}
 				/>
 				<Select
 					defaultValue="EN"

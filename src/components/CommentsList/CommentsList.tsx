@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../../store/store";
 import { getComments } from "../../store/slices/commentsSlice";
 import { List, ListItem, Avatar, Typography } from "@mui/material";
+import CommentsListItem from "./CommentsListItem/CommentsListItem";
 
 const CommentsList: React.FC = () => {
 	const dispatch = useDispatch<AppDispatch>();
@@ -35,20 +36,7 @@ const CommentsList: React.FC = () => {
 		<List>
 			{comments.map((comment) => {
 				return (
-					<ListItem key={comment.id}>
-						<Avatar src={comment.designer.avatar} />
-						<div>
-							<Typography variant="body1">{"Username: " +comment.designer.username}</Typography>
-							<Typography
-								variant="body2"
-								color="textSecondary"
-							>
-								{timeSinceComment(comment.date_created)}
-							</Typography>
-							<Typography variant="body2">{"Issue: "+comment.issue}</Typography>
-							<Typography variant="body2">{"Message: "+comment.message}</Typography>
-						</div>
-					</ListItem>
+					<CommentsListItem key={comment.id} comment={comment} />
 				);
 			})}
 		</List>

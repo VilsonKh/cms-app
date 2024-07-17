@@ -5,6 +5,7 @@ import { getDesigners } from "../../store/slices/designersSlice";
 import { Table, TableContainer, Paper, TablePagination } from "@mui/material";
 import DesignerTableHead from "./DesignerTableHead/DesignerTableHead";
 import DesignerTableBody from "./DesignerTableBody/DesignerTableBody";
+import { useTranslation } from "react-i18next";
 
 const DesignerTable: React.FC = () => {
 	const dispatch = useDispatch<AppDispatch>();
@@ -14,6 +15,7 @@ const DesignerTable: React.FC = () => {
 	const [rowsPerPage, setRowsPerPage] = useState(5);
 	const [order, setOrder] = useState<"asc" | "desc">("asc");
 	const [orderBy, setOrderBy] = useState<"username" | "email">("username");
+  const {t}=useTranslation();
 
 	useEffect(() => {
 		dispatch(getDesigners({ page: page + 1, limit: rowsPerPage }));
@@ -68,6 +70,10 @@ const DesignerTable: React.FC = () => {
 				component="div"
 				count={designers.count || 0}
 				rowsPerPage={rowsPerPage}
+        labelRowsPerPage={t("Rows Per Page")}
+        labelDisplayedRows={({ from, to, count }) =>
+					`${from}-${to} ${t('of')} ${count !== -1 ? count : `more than ${to}`}`
+				}
 				page={page}
 				onPageChange={(_, newPage) => setPage(newPage)}
 				onRowsPerPageChange={handleChangeRowsPerPage}

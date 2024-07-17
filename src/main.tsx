@@ -1,36 +1,41 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { Provider } from 'react-redux';
-import { store } from './store/store';
-import Routes from './routes';
-import './i18n';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { CssBaseline } from '@mui/material';
+import React, { useContext, useState } from "react";
+import ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
+import { store } from "./store/store";
+import Routes from "./routes/routes";
+import "./i18n";
+import { ThemeProvider as MuiThemeProvider, createTheme } from "@mui/material/styles";
+import { CssBaseline } from "@mui/material";
+import { ThemeContext, ThemeProvider } from "./themeContext/themeContext";
 
 const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-  },
+	palette: {
+		mode: "dark",
+	},
 });
 
 const lightTheme = createTheme({
-  palette: {
-    mode: 'light',
-  },
+	palette: {
+		mode: "light",
+	},
 });
 
 const App: React.FC = () => {
-  const [darkMode, setDarkMode] = React.useState(false);
+	const { darkMode } = useContext(ThemeContext);
 
-  return (
-    <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-      <CssBaseline />
-      <Provider store={store}>
-        <Routes setDarkMode={setDarkMode} darkMode={darkMode} />
-      </Provider>
-    </ThemeProvider>
-  );
+	return (
+		<MuiThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+			<CssBaseline />
+			<Provider store={store}>
+				<Routes />
+			</Provider>
+		</MuiThemeProvider>
+	);
 };
 
-const root = ReactDOM.createRoot(document.getElementById('root')!);
-root.render(<App />);
+const root = ReactDOM.createRoot(document.getElementById("root")!);
+root.render(
+	<ThemeProvider>
+		<App />
+	</ThemeProvider>
+);
