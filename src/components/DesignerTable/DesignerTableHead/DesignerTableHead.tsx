@@ -21,7 +21,7 @@ const DesignerTableHead: React.FC<DesignerTableHeadProps> = ({ order, orderBy, o
     { id: 'tasksClosed', label: t('Tasks Closed'), sortable: false , width:"15%" },
     { id: 'tasksInProgress', label: t('Tasks In Progress'), sortable: false , width: "15%"},
   ];
-  const createSortHandler = (property: 'username' | 'email') => (event: React.MouseEvent<unknown>) => {
+  const createSortHandler = (property: 'username' | 'email') => () => {
     onRequestSort(property);
   };
 

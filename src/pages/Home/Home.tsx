@@ -2,7 +2,6 @@ import React from 'react';
 import CommentsList from '../../components/CommentsList/CommentsList';
 import TopDesignersList from '../../components/TopDesignersList/TopDesignersList';
 import { Container, Typography } from '@mui/material';
-import TestComponent from '../../components/TestComponent/TestComponent';
 import { useTranslation } from 'react-i18next';
 
 const Home: React.FC = () => {

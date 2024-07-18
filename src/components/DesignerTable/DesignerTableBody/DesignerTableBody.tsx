@@ -1,7 +1,7 @@
 import React from 'react';
-import { TableBody, TableRow, TableCell, Avatar } from '@mui/material';
+import { TableBody} from '@mui/material';
 import TableSkeleton from '../TableSkeleton';
-import { getTasksAmount } from '../../../utils/countHelpers';
+
 import DesignerTableRow from '../DesignerTableRow/DesignerTableRow';
 
 

@@ -7,9 +7,9 @@ import DesignerTableHead from "./DesignerTableHead/DesignerTableHead";
 import DesignerTableBody from "./DesignerTableBody/DesignerTableBody";
 import { useTranslation } from "react-i18next";
 
-export const debounce = (func, wait) => {
-  let timeout;
-  return function(...args) {
+const debounce = (func: Function, wait: number)=> {
+  let timeout: any;
+  return function(...args: any) {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
       func.apply(this, args);
@@ -32,13 +32,13 @@ const DesignerTable: React.FC = () => {
 	}, [dispatch, page, rowsPerPage]);
 
   const debouncedLoadDesigners = useCallback(
-    debounce((newPage, newRowsPerPage) => {
+    debounce((newPage:any, newRowsPerPage: any) => {
       dispatch(getDesigners({ page: newPage + 1, limit: newRowsPerPage }));
     }, 300),
     [dispatch]
   );
 
-	const handleChangePage = (event: unknown, newPage: number) => {
+	const handleChangePage = (_:never, newPage: number) => {
     setPage(newPage);
     debouncedLoadDesigners(newPage, rowsPerPage);
   };

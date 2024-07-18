@@ -10,7 +10,7 @@ const LineChartComponent: React.FC<{ data: any[]; numOfWeeks: number; setNumOfWe
 }) => {
 	const { t } = useTranslation();
 
-	const legendFormatter = (value) => {
+	const legendFormatter = (value: "profit" | "expenses" | "net") => {
 		switch (value) {
 			case "profit":
 				return t("tasks.profit");

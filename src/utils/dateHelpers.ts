@@ -1,6 +1,5 @@
 import { format, differenceInDays, differenceInHours, differenceInMinutes } from "date-fns";
 import { TFunction } from "i18next";
-import { useTransition } from "react";
 
 export const formatDate = (date: Date | string, formatStr: string): string => {
 	return format(new Date(date), formatStr);

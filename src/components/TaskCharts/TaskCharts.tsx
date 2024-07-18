@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../../store/store";
 import { getTasks } from "../../store/slices/tasksSlice";
-import { Grid, Typography, Box } from "@mui/material";
+import { Grid, Box } from "@mui/material";
 import { getStatusData, processData } from "../../utils/chartHelpers";
 import LineChartComponent from "./LineChartComponent/LineChartComponent";
 import PieChartComponent from "./PieChartComponent/PieChartComponent";
@@ -22,7 +22,7 @@ const TaskChart: React.FC = () => {
     }
   }, [dispatch, status, allTasks]);
 
-	const closedTasks = allTasks.filter((task) => task.status === "Done");
+	const closedTasks = allTasks.filter((task: any) => task.status === "Done");
 	const data = processData(closedTasks, numOfWeeks);
 	const statusData = getStatusData(allTasks);
 
