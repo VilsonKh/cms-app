@@ -3,6 +3,13 @@ import { AppBar, Toolbar, Typography, Switch, Select, MenuItem, Button } from "@
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useTheme } from "../../themeContext/themeContext";
+import { styled } from "@mui/material/styles";
+
+
+const StyledLink = styled(Link)(({theme}) => ({
+	textDecoration: "none",
+	color: "inherit"
+}))
 
 
 const Header = () => {
@@ -16,7 +23,7 @@ const Header = () => {
 				<Typography
 					variant="h6"
 					style={{ flexGrow: 1 }}
-					component={Link}
+					component={StyledLink}
 					to={"/"}
 				>
 					CRM System

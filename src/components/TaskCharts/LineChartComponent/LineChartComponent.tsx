@@ -1,10 +1,12 @@
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import { Typography, TextField, MenuItem, Box } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 const LineChartComponent: React.FC<{ data: any[], numOfWeeks: number, setNumOfWeeks: (weeks: number) => void }> = ({ data, numOfWeeks, setNumOfWeeks }) => {
+  const { t } = useTranslation();
   return (
-    <Box p={2} width="500">
+    <Box p={2} >
       <TextField
         select
         label="Number of Weeks"
@@ -20,7 +22,7 @@ const LineChartComponent: React.FC<{ data: any[], numOfWeeks: number, setNumOfWe
         ))}
       </TextField>
       <Typography variant="h6" gutterBottom>
-        Tasks Over Weeks
+        {t("Tasks Over Weeks")}
       </Typography>
       <LineChart width={500} height={300} data={data}>
         <CartesianGrid strokeDasharray="3 3" />

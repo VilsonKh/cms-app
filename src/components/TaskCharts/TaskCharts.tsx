@@ -21,17 +21,26 @@ const TaskChart: React.FC = () => {
 	const statusData = getStatusData(allTasks);
 
 	return (
-		<Grid
-			container
-			justifyContent={"space-between"}
-		>
-			<LineChartComponent
-				data={data}
-				numOfWeeks={numOfWeeks}
-				setNumOfWeeks={setNumOfWeeks}
-			/>
-			<PieChartComponent data={statusData} />
-		</Grid>
+		<Box p={2}>
+			<Grid
+				container
+				spacing={4}
+				justifyContent={"center"}
+				alignItems={"center"}
+			>
+				<Grid>
+					<LineChartComponent
+						data={data}
+						numOfWeeks={numOfWeeks}
+						setNumOfWeeks={setNumOfWeeks}
+					/>
+				</Grid>
+
+				<>
+					<PieChartComponent data={statusData} />
+				</>
+			</Grid>
+		</Box>
 	);
 };
 

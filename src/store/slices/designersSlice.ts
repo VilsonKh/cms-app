@@ -6,7 +6,7 @@ interface Designer {
   avatar: string;
   name: string;
   email: string;
-  issues: []
+  issues: {status: string, date_created: string}[]
 }
 
 interface DesignersState {

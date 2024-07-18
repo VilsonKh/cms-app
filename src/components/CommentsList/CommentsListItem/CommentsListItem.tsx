@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ListItem, Avatar, Typography, Button } from "@mui/material";
+import { Card, CardContent, CardHeader, Avatar, Typography, Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 interface Comment {
@@ -19,7 +19,7 @@ interface CommentListItemProps {
 
 const CommentsListItem: React.FC<CommentListItemProps> = ({ comment }) => {
   const [expanded, setExpanded] = useState(false);
-  const {t} = useTranslation()
+  const { t } = useTranslation();
 
   const timeSinceComment = (date: string) => {
     const now = new Date();
@@ -53,24 +53,26 @@ const CommentsListItem: React.FC<CommentListItemProps> = ({ comment }) => {
     : comment.message;
 
   return (
-    <ListItem key={comment.id} alignItems="flex-start">
-      <Avatar src={comment.designer.avatar} />
-      <div style={{ marginLeft: 16 }}>
-        <Typography variant="body1">
-          {`${t("Username")}: ${comment.designer.username}`}
-        </Typography>
+    <Card key={comment.id} style={{ marginBottom: 16 }}>
+      <CardHeader
+        avatar={<Avatar src={comment.designer.avatar} />}
+        title={`${t("Username")}: ${comment.designer.username}`}
+        subheader={timeSinceComment(comment.date_created)}
+      />
+      <CardContent>
         <Typography variant="body2" color="textSecondary">
-          {timeSinceComment(comment.date_created)}
+          {`${t("Issue")}: ${comment.issue}`}
         </Typography>
-        <Typography variant="body2">{`${t("Issue")}: ${comment.issue}`}</Typography>
-        <Typography variant="body2">{`${t("Message")}: ${messageToShow}`}</Typography>
+        <Typography variant="body2">
+          {`${t("Message")}: ${messageToShow}`}
+        </Typography>
         {comment.message.length > MAX_LENGTH && (
           <Button variant="text" color="primary" onClick={toggleExpanded}>
             {isExpanded ? t("read less") : t("read more")}
           </Button>
         )}
-      </div>
-    </ListItem>
+      </CardContent>
+    </Card>
   );
 };
 

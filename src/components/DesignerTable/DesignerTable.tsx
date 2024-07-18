@@ -21,8 +21,6 @@ const DesignerTable: React.FC = () => {
 		dispatch(getDesigners({ page: page + 1, limit: rowsPerPage }));
 	}, [dispatch, page, rowsPerPage]);
 
-	console.log(designers.results);
-
 	const handleRequestSort = (property: "username" | "email") => {
 		const isAsc = orderBy === property && order === "asc";
 		setOrder(isAsc ? "desc" : "asc");

@@ -2,19 +2,18 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../../store/store";
 import { getDesigners } from "../../store/slices/designersSlice";
-import { List, ListItem, Avatar, Typography } from "@mui/material";
-import { convertHours, formatDate, relativeTime } from "../../utils/dateHelpers";
-import { getTasksAmount } from "../../utils/countHelpers";
-
+import { List } from "@mui/material";
+import TopDesignersListItemSkeleton from "./TopDesignersListItemSkeleton";
+import TopDesignersListItem from "./TopDesignersListItem/TopDesignersListItem";
 const TopDesignersList: React.FC = () => {
 	const dispatch = useDispatch<AppDispatch>();
 	const designers = useSelector((state: RootState) => state.designers.list);
+	const status = useSelector((state: RootState) => state.designers.status);
 
 	useEffect(() => {
-		dispatch(getDesigners());
+		dispatch(getDesigners({ limit: 10 }));
 	}, [dispatch]);
-
-	if (!designers || !designers.results) return null;
+	
 
 	const analyzeTasks = (tasks: { status: string; date_created: string }[]) => {
 		if (!tasks) return { medianTime: 0, completedTasksCount: 0 };
@@ -61,19 +60,21 @@ const TopDesignersList: React.FC = () => {
 			return b.completedTasksCount - a.completedTasksCount;
 		});
 
+
+
 	return (
 		<List>
-			{sortedDesigners.map((designer) => (
-				<ListItem key={designer.id}>
-					<Avatar src={designer.avatar} />
-					<div>
-						<Typography variant="body1">{designer.username}</Typography>
-						<Typography variant="body2" color="textSecondary">
-							Median Time: {convertHours(designer.medianTime)} - Tasks Completed: {designer.completedTasksCount}
-						</Typography>
-					</div>
-				</ListItem>
-			))}
+			{status === "loading" ? (
+				<TopDesignersListItemSkeleton count={5} />
+			) : (
+				sortedDesigners.map((designer, index) => (
+					<TopDesignersListItem
+						key={designer.id}
+						designer={designer}
+						index={index}
+					/>
+				))
+			)}
 		</List>
 	);
 };
