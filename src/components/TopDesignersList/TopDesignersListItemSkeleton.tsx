@@ -8,7 +8,7 @@ const TopDesignersListItemSkeleton: React.FC<SkelotonProps> = ({ count }) => {
 	return (
 		<>
 			{[...new Array(count)].map((_, index) => (
-				<ListItem>
+				<ListItem key={index}>
 					<Skeleton
 						variant="text"
 						width={24}

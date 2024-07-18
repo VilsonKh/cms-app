@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
@@ -21,6 +21,7 @@ const lightTheme = createTheme({
 });
 
 const App: React.FC = () => {
+
 	const { darkMode } = useContext(ThemeContext);
 
 	return (

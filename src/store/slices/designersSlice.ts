@@ -4,7 +4,7 @@ import { fetchDesigners } from '../../services/api';
 interface Designer {
   id: string;
   avatar: string;
-  name: string;
+  username: string;
   email: string;
   issues: {status: string, date_created: string}[]
 }
@@ -40,6 +40,7 @@ const designersSlice = createSlice({
       })
       .addCase(getDesigners.fulfilled, (state, action: PayloadAction<Designer[]>) => {
         state.status = 'succeeded';
+        // @ts-ignore
         state.list = action.payload;
       })
       .addCase(getDesigners.rejected, (state) => {

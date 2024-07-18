@@ -16,6 +16,7 @@ const TopDesignersList: React.FC = () => {
 
   useEffect(() => {
     if (status === 'idle' && (!designers.results || designers.results.length === 0)) {
+      // @ts-ignore
       dispatch(getDesigners({ page: 1, limit: 10 }));
     }
   }, [dispatch, status, designers.results]);

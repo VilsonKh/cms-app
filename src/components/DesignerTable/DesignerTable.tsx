@@ -12,6 +12,7 @@ const debounce = (func: Function, wait: number)=> {
   return function(...args: any) {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
+			// @ts-ignore
       func.apply(this, args);
     }, wait);
   };
@@ -28,11 +29,13 @@ const DesignerTable: React.FC = () => {
 	const { t } = useTranslation();
 
 	useEffect(() => {
+		// @ts-ignore
 		if (status === "idle" && (!designers.results || designers.results.length === 0)) dispatch(getDesigners({ page: page + 1, limit: rowsPerPage }));
 	}, [dispatch, page, rowsPerPage]);
 
   const debouncedLoadDesigners = useCallback(
     debounce((newPage:any, newRowsPerPage: any) => {
+			// @ts-ignore
       dispatch(getDesigners({ page: newPage + 1, limit: newRowsPerPage }));
     }, 300),
     [dispatch]
@@ -93,7 +96,7 @@ const DesignerTable: React.FC = () => {
 				labelRowsPerPage={t("Rows Per Page")}
 				labelDisplayedRows={({ from, to, count }) => `${from}-${to} ${t("of")} ${count !== -1 ? count : `more than ${to}`}`}
 				page={page}
-				onPageChange={handleChangePage}
+				onPageChange={handleChangePage as any}
 				onRowsPerPageChange={handleChangeRowsPerPage}
 			/>
 		</TableContainer>

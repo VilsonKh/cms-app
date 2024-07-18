@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { fetchComments } from "../../services/api";
+import { RootState } from "../store";
 
 interface Comment {
 	id: string;
@@ -23,8 +24,9 @@ const initialState: CommentsState = {
 	status: "idle",
 };
 
+
 export const getComments = createAsyncThunk<Comment[]>("comments/getComments", async (_, { getState, rejectWithValue }) => {
-	const state = getState();
+	const state = getState() as RootState;
 	if(state.comments.latest.length > 0) {
 		return rejectWithValue('Comments already loaded')
 	}

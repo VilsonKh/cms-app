@@ -1,5 +1,4 @@
 import { Skeleton, TableCell, TableRow } from "@mui/material";
-import React from "react";
 
 const TableSkeleton = ({rows}: {rows: number}) => {
 	return (
