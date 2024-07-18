@@ -1,0 +1,58 @@
+{
+  "translation": {
+    "comments": {
+      "latest": "Latest Comments",
+      "username": "Username",
+      "message": "Message",
+      "issue": "Issue",
+      "daysAgo": "days ago",
+      "hoursAgo": "hours ago",
+      "minutesAgo": "minutes ago",
+      "secondsAgo": "seconds ago",
+      "readMore": "read more",
+      "readLess": "read less"
+    },
+    "designers": {
+      "top": "Top Designers",
+      "avatar": "Avatar",
+      "name": "Name",
+      "tasksClosed": "Tasks Closed",
+      "tasksInProgress": "Tasks In Progress",
+      "medianTime": "Median time",
+      "completedTasks": "Completed tasks",
+      "designers": "designers"
+    },
+    "tasks": {
+      "overview": "Tasks Overview",
+      "week": "Week",
+      "tasks": "tasks",
+      "rowsPerPage": "Rows Per Page",
+      "of": "of",
+      "tasksOverWeeks": "Tasks Over Weeks",
+      "tasksStatusDistribution": "Tasks Status Distribution",
+      "numberOfWeeks": "Number of Weeks",
+      "profit": "profit",
+      "expenses": "expenses",
+      "net": "net",
+      "done": "done",
+      "in progress": "in progress",
+      "new": "new"
+    },
+    "time": {
+      "day": "{{count}} day",
+      "days": "{{count}} days",
+      "hour": "{{count}} hour",
+      "hours": "{{count}} hours",
+      "week": "{{count}} week",
+      "weeks": "{{count}} weeks",
+      "weeks_1": "{{count}} week",
+      "weeks_2_4": "{{count}} weeks",
+      "weeks_5_plus": "{{count}} weeks",
+      "month": "{{count}} month",
+      "months_1": "{{count}} month",
+      "months_2_4": "{{count}} months",
+      "months_5_plus": "{{count}} months",
+      "months": "{{count}} months"
+    }
+  }
+}

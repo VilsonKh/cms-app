@@ -14,14 +14,16 @@ const CommentsList: React.FC = () => {
 		dispatch(getComments());
 	}, [dispatch]);
 
-  console.log(status)
+	const sortedComments = [...comments].sort((a, b) => {
+    return new Date(b.date_created).getTime() - new Date(a.date_created).getTime();
+  });
 
 	return (
 		<List>
 			{status === "loading" ? (
 				<CommentsListItemSkeleton count={5} />
 			) : (
-				comments.map((comment) => {
+				sortedComments.map((comment) => {
 					return (
 						<CommentsListItem
 							key={comment.id}

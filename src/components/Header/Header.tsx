@@ -1,14 +1,18 @@
-import React from "react";
+
 import { AppBar, Toolbar, Typography, Switch, Select, MenuItem, Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useTheme } from "../../themeContext/themeContext";
 import { styled } from "@mui/material/styles";
 
 
-const StyledLink = styled(Link)(({theme}) => ({
+const StyledLink = styled(NavLink)(({theme}) => ({
 	textDecoration: "none",
-	color: "inherit"
+	color: "inherit",
+	"&.active": {
+		color: theme.palette.mode === 'dark' ? '#f0f0f0' : '#0056b3',
+		fontWeight: "bold",
+	}
 }))
 
 
@@ -31,18 +35,18 @@ const Header = () => {
 				<Button
 					color="inherit"
 					style={{ marginRight: "16px" }}
-					component={Link}
+					component={StyledLink}
 					to="/tasks"
 				>
-					{t("tasks")}
+					{t("tasks.tasks")}
 				</Button>
 				<Button
 					color="inherit"
 					style={{ marginRight: "16px" }}
-					component={Link}
+					component={StyledLink}
 					to="/designers"
 				>
-					{t("designers")}
+					{t("designers.designers")}
 				</Button>
 				<Switch
 					color="default"
@@ -70,7 +74,7 @@ const Header = () => {
 					variant="body1"
 					style={{ marginLeft: "16px" }}
 				>
-					{t("Week")} 28
+					{t("time.week",{count: 28})}
 				</Typography>
 			</Toolbar>
 		</AppBar>

@@ -23,6 +23,8 @@ export const fetchDesigners = async (params: { page?: number; limit?: number }) 
         ...params,
       },
     });
+
+    console.log(response.data)
     return response.data;
   } catch (error) {
     console.error('Error fetching designers:', error);

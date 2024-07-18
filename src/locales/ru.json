@@ -1,0 +1,60 @@
+{
+  "translation": {
+    "comments": {
+      "latest": "Последние комментарии",
+      "username": "Имя пользователя",
+      "message": "Сообщение",
+      "issue": "Задача",
+      "daysAgo": "дней назад",
+      "hoursAgo": "часов назад",
+      "minutesAgo": "минут назад",
+      "secondsAgo": "секунд назад",
+      "readMore": "показать",
+      "readLess": "скрыть"
+    },
+    "designers": {
+      "top": "Лучшие дизайнеры",
+      "avatar": "Аватар",
+      "name": "Имя",
+      "tasksClosed": "Закрытые задачи",
+      "tasksInProgress": "В процессе",
+      "medianTime": "Медианное время",
+      "completedTasks": "Завершенные задачи",
+      "designers": "дизайнеры"
+    },
+    "tasks": {
+      "overview": "Обзор задач",
+      "week": "Неделя",
+      "tasks": "задачи",
+      "rowsPerPage": "Строк на странице",
+      "of": "из",
+      "tasksOverWeeks": "Задачи за недели",
+      "tasksStatusDistribution": "Распределение статусов задач",
+      "numberOfWeeks": "Количество недель",
+      "profit": "доход",
+      "expenses": "расход",
+      "net": "разница",
+      "done": "завершены",
+      "in progress": "в процессе",
+      "new": "новые"
+    },
+    "time": {
+      "day": "{{count}} день",
+      "days_1": "{{count}} день",
+      "days_2_4": "{{count}} дня",
+      "days_5_plus": "{{count}} дней",
+      "hour": "{{count}} час",
+      "hours_1": "{{count}} час",
+      "hours_2_4": "{{count}} часа",
+      "hours_5_plus": "{{count}} часов",
+      "week": "{{count}} неделя",
+      "weeks_1": "{{count}} неделя",
+      "weeks_2_4": "{{count}} недели",
+      "weeks_5_plus": "{{count}} недель",
+      "month": "{{count}} месяц",
+      "months_1": "{{count}} месяц",
+      "months_2_4": "{{count}} месяца",
+      "months_5_plus": "{{count}} месяцев"
+    }
+  }
+}

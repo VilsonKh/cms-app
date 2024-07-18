@@ -8,7 +8,7 @@ const Tasks: React.FC = () => {
   return (
     <Container>
       <Typography variant="h4" gutterBottom>
-        {t('Tasks Overview')}
+        {t('tasks.overview')}
       </Typography>
       <TaskChart />
     </Container>

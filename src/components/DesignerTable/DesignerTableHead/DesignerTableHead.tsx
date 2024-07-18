@@ -15,11 +15,11 @@ const DesignerTableHead: React.FC<DesignerTableHeadProps> = ({ order, orderBy, o
   const {t}=useTranslation()
 
   const headCells = [
-    { id: 'avatar', label: t('Avatar'), sortable: false },
-    { id: 'username', label: t('Name'), sortable: true },
-    { id: 'email', label:'Email', sortable: true },
-    { id: 'tasksClosed', label: t('Tasks Closed'), sortable: false },
-    { id: 'tasksInProgress', label: t('Tasks In Progress'), sortable: false },
+    { id: 'avatar', label: t('Avatar'), sortable: false, width: "10%" },
+    { id: 'username', label: t('Name'), sortable: true , width: "20%"},
+    { id: 'email', label:'Email', sortable: true , width: "30%"},
+    { id: 'tasksClosed', label: t('Tasks Closed'), sortable: false , width:"15%" },
+    { id: 'tasksInProgress', label: t('Tasks In Progress'), sortable: false , width: "15%"},
   ];
   const createSortHandler = (property: 'username' | 'email') => (event: React.MouseEvent<unknown>) => {
     onRequestSort(property);
@@ -32,6 +32,7 @@ const DesignerTableHead: React.FC<DesignerTableHeadProps> = ({ order, orderBy, o
           <TableCell
             key={headCell.id}
             sortDirection={orderBy === headCell.id ? order : false}
+            style={{ width: headCell.width, minWidth: headCell.width }}
           >
             {headCell.sortable ? (
               <TableSortLabel

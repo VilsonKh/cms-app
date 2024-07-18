@@ -15,6 +15,7 @@ interface DesignerListItemProps {
 
 const DesignerListItem: React.FC<DesignerListItemProps> = ({ designer, index }) => {
   const {t} = useTranslation();
+
   return (
     <ListItem key={designer.username}>
       <Typography variant="h6" style={{ marginRight: 16, minWidth: 20, textAlign: 'right' }}>{index + 1}</Typography>
@@ -22,7 +23,7 @@ const DesignerListItem: React.FC<DesignerListItemProps> = ({ designer, index }) 
       <div style={{ marginLeft: 16 }}>
         <Typography variant="body1">{designer.username}</Typography>
         <Typography variant="body2" color="textSecondary">
-          {t("Median time")}: {convertHours(designer.medianTime)} - {t("Completed tasks")}: {designer.completedTasksCount}
+          {t("Median time")}: {convertHours(designer.medianTime, t)} - {t("designers.completedTasks")}: {designer.completedTasksCount}
         </Typography>
       </div>
     </ListItem>

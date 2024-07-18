@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { Card, CardContent, CardHeader, Avatar, Typography, Button } from "@mui/material";
+import { ListItem, Avatar, Typography, Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { formatDistanceToNowStrict } from 'date-fns';
+import { ru, enUS } from 'date-fns/locale';
 
 interface Comment {
   id: string;
@@ -19,25 +21,20 @@ interface CommentListItemProps {
 
 const CommentsListItem: React.FC<CommentListItemProps> = ({ comment }) => {
   const [expanded, setExpanded] = useState(false);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const timeSinceComment = (date: string) => {
-    const now = new Date();
+
     const commentDate = new Date(date);
-    const diff = now.getTime() - commentDate.getTime();
-    const seconds = Math.floor(diff / 1000);
-    const minutes = Math.floor(seconds / 60);
-    const hours = Math.floor(minutes / 60);
-    const days = Math.floor(hours / 24);
-    if (days > 0) {
-      return `${days} ${t("days ago")}`;
-    } else if (hours > 0) {
-      return `${hours} ${t('hours ago')}`;
-    } else if (minutes > 0) {
-      return `${minutes} ${t('minutes ago')}`;
-    } else {
-      return `${seconds} ${t('seconds ago')}`;
-    }
+
+    const locale = i18n.language === 'ru' ? ru : enUS;
+
+    const distance = formatDistanceToNowStrict(commentDate, { addSuffix: true, locale });
+    
+    return distance.replace(/(\d+)\s(\w+)/, (_, number, unit) => {
+      console.log(unit)
+      return t(`time.${unit}`, { count: number });
+    });
   };
 
   const toggleExpanded = () => {
@@ -53,26 +50,24 @@ const CommentsListItem: React.FC<CommentListItemProps> = ({ comment }) => {
     : comment.message;
 
   return (
-    <Card key={comment.id} style={{ marginBottom: 16 }}>
-      <CardHeader
-        avatar={<Avatar src={comment.designer.avatar} />}
-        title={`${t("Username")}: ${comment.designer.username}`}
-        subheader={timeSinceComment(comment.date_created)}
-      />
-      <CardContent>
+    <ListItem key={comment.id} alignItems="flex-start">
+      <Avatar src={comment.designer.avatar} />
+      <div style={{ marginLeft: 16 }}>
+        <Typography variant="body1">
+          {`${t("Username")}: ${comment.designer.username}`}
+        </Typography>
         <Typography variant="body2" color="textSecondary">
-          {`${t("Issue")}: ${comment.issue}`}
+          {timeSinceComment(comment.date_created)}
         </Typography>
-        <Typography variant="body2">
-          {`${t("Message")}: ${messageToShow}`}
-        </Typography>
+        <Typography variant="body2">{`${t("Issue")}: ${comment.issue}`}</Typography>
+        <Typography variant="body2">{`${t("Message")}: ${messageToShow}`}</Typography>
         {comment.message.length > MAX_LENGTH && (
           <Button variant="text" color="primary" onClick={toggleExpanded}>
             {isExpanded ? t("read less") : t("read more")}
           </Button>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </ListItem>
   );
 };
 

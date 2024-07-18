@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
 import Routes from "./routes/routes";
-import "./i18n";
+import "./locales/i18n";
 import { ThemeProvider as MuiThemeProvider, createTheme } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
 import { ThemeContext, ThemeProvider } from "./themeContext/themeContext";

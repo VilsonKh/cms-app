@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../../store/store";
 import { getDesigners } from "../../store/slices/designersSlice";
@@ -6,6 +6,16 @@ import { Table, TableContainer, Paper, TablePagination } from "@mui/material";
 import DesignerTableHead from "./DesignerTableHead/DesignerTableHead";
 import DesignerTableBody from "./DesignerTableBody/DesignerTableBody";
 import { useTranslation } from "react-i18next";
+
+export const debounce = (func, wait) => {
+  let timeout;
+  return function(...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      func.apply(this, args);
+    }, wait);
+  };
+};
 
 const DesignerTable: React.FC = () => {
 	const dispatch = useDispatch<AppDispatch>();
@@ -15,11 +25,23 @@ const DesignerTable: React.FC = () => {
 	const [rowsPerPage, setRowsPerPage] = useState(5);
 	const [order, setOrder] = useState<"asc" | "desc">("asc");
 	const [orderBy, setOrderBy] = useState<"username" | "email">("username");
-  const {t}=useTranslation();
+	const { t } = useTranslation();
 
 	useEffect(() => {
-		dispatch(getDesigners({ page: page + 1, limit: rowsPerPage }));
+		if (status === "idle" && (!designers.results || designers.results.length === 0)) dispatch(getDesigners({ page: page + 1, limit: rowsPerPage }));
 	}, [dispatch, page, rowsPerPage]);
+
+  const debouncedLoadDesigners = useCallback(
+    debounce((newPage, newRowsPerPage) => {
+      dispatch(getDesigners({ page: newPage + 1, limit: newRowsPerPage }));
+    }, 300),
+    [dispatch]
+  );
+
+	const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+    debouncedLoadDesigners(newPage, rowsPerPage);
+  };
 
 	const handleRequestSort = (property: "username" | "email") => {
 		const isAsc = orderBy === property && order === "asc";
@@ -68,12 +90,10 @@ const DesignerTable: React.FC = () => {
 				component="div"
 				count={designers.count || 0}
 				rowsPerPage={rowsPerPage}
-        labelRowsPerPage={t("Rows Per Page")}
-        labelDisplayedRows={({ from, to, count }) =>
-					`${from}-${to} ${t('of')} ${count !== -1 ? count : `more than ${to}`}`
-				}
+				labelRowsPerPage={t("Rows Per Page")}
+				labelDisplayedRows={({ from, to, count }) => `${from}-${to} ${t("of")} ${count !== -1 ? count : `more than ${to}`}`}
 				page={page}
-				onPageChange={(_, newPage) => setPage(newPage)}
+				onPageChange={handleChangePage}
 				onRowsPerPageChange={handleChangeRowsPerPage}
 			/>
 		</TableContainer>
