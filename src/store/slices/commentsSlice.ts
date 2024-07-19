@@ -25,10 +25,10 @@ const initialState: CommentsState = {
 };
 
 
-export const getComments = createAsyncThunk<Comment[]>("comments/getComments", async (_, { getState, rejectWithValue }) => {
+export const getComments = createAsyncThunk<Comment[]>("comments/getComments", async (_, { getState }) => {
 	const state = getState() as RootState;
 	if(state.comments.latest.length > 0) {
-		return rejectWithValue('Comments already loaded')
+		return state.comments.latest
 	}
 	const response = await fetchComments();
 	return response;

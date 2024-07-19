@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { fetchDesigners } from "../../services/api";
+import { RootState } from "../store";
 
 interface Designer {
 	id: string;
@@ -9,42 +10,45 @@ interface Designer {
 	issues: { status: string; date_created: string }[];
 }
 
-interface DesignersState {
-	list: {
-		count?: number;
-		results?: Designer[];
-	};
+interface TopDesignersState {
+	list: Designer[],
 	status: "idle" | "loading" | "succeeded" | "failed";
 }
 
-const initialState: DesignersState = {
-	list: {},
+const initialState: TopDesignersState = {
+	list: [],
 	status: "idle",
 };
 
-export const getDesigners = createAsyncThunk<Designer[]>("designers/getDesigners", async (params: any) => {
+
+
+export const getTopDesigners = createAsyncThunk<Designer[]>("designers/getTopDesigners", async (params: any, { getState }) => {
+	const state = getState() as RootState;
+	if(state.comments.latest.length > 0) {
+		return state.comments.latest
+	}
 	const response = await fetchDesigners(params);
 	return response;
 });
 
-const designersSlice = createSlice({
+const topDesignersSlice = createSlice({
 	name: "designers",
 	initialState,
 	reducers: {},
 	extraReducers: (builder) => {
 		builder
-			.addCase(getDesigners.pending, (state) => {
+			.addCase(getTopDesigners.pending, (state) => {
 				state.status = "loading";
 			})
-			.addCase(getDesigners.fulfilled, (state, action: PayloadAction<Designer[]>) => {
+			.addCase(getTopDesigners.fulfilled, (state, action: PayloadAction<Designer[]>) => {
 				state.status = "succeeded";
 				// @ts-ignore
 				state.list = action.payload;
 			})
-			.addCase(getDesigners.rejected, (state) => {
+			.addCase(getTopDesigners.rejected, (state) => {
 				state.status = "failed";
 			});
 	},
 });
 
-export default designersSlice.reducer;
+export default topDesignersSlice.reducer;

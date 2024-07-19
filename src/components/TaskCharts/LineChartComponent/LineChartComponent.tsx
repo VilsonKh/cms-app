@@ -1,13 +1,22 @@
-import React from "react";
+import React, { memo } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
 import { Typography, TextField, MenuItem, Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-const LineChartComponent: React.FC<{ data: any[]; numOfWeeks: number; setNumOfWeeks: (weeks: number) => void }> = ({
-	data,
-	numOfWeeks,
-	setNumOfWeeks,
-}) => {
+interface OneWeek{
+	week: number,
+	profit: number,
+	expenses: number,
+	net: number
+}
+
+interface TaskChartProps {
+	data: OneWeek[];
+	numOfWeeks: number;
+	setNumOfWeeks: (weeks: number) => void;
+}
+
+const LineChartComponent: React.FC<TaskChartProps> = ({ data, numOfWeeks, setNumOfWeeks }) => {
 	const { t } = useTranslation();
 
 	const legendFormatter = (value: "profit" | "expenses" | "net") => {
@@ -79,4 +88,4 @@ const LineChartComponent: React.FC<{ data: any[]; numOfWeeks: number; setNumOfWe
 	);
 };
 
-export default LineChartComponent;
+export default memo(LineChartComponent)

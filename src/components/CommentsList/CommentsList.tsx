@@ -12,6 +12,7 @@ const CommentsList: React.FC = () => {
 	const status = useSelector((state: RootState) => state.comments.status);
 
 	useEffect(() => {
+
 		dispatch(getComments());
 	}, [dispatch]);
 

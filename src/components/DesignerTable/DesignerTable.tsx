@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../../store/store";
 import { getDesigners } from "../../store/slices/designersSlice";
@@ -8,15 +8,15 @@ import DesignerTableBody from "./DesignerTableBody/DesignerTableBody";
 import { useTranslation } from "react-i18next";
 import ErrorNetworkMessage from "../ErrorNetworkMessage/ErrorNetworkMessage";
 
-const debounce = (func: Function, wait: number)=> {
-  let timeout: any;
-  return function(...args: any) {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => {
+const debounce = (func: Function, wait: number) => {
+	let timeout: any;
+	return function (...args: any) {
+		clearTimeout(timeout);
+		timeout = setTimeout(() => {
 			// @ts-ignore
-      func.apply(this, args);
-    }, wait);
-  };
+			func.apply(this, args);
+		}, wait);
+	};
 };
 
 const DesignerTable: React.FC = () => {
@@ -31,25 +31,31 @@ const DesignerTable: React.FC = () => {
 
 	useEffect(() => {
 		// @ts-ignore
-		if (status === "idle" && (!designers.results || designers.results.length === 0)) dispatch(getDesigners({ page: page + 1, limit: rowsPerPage }));
+		if (
+			(status === "idle" && (!designers.results || designers.results.length === 0)) ||
+			rowsPerPage > designers.results.length ||
+			rowsPerPage < designers.results.length
+		) {
+			dispatch(getDesigners({ page: page + 1, limit: rowsPerPage }));
+		}
 	}, [dispatch, page, rowsPerPage]);
 
 	if (status === "failed") {
 		return <ErrorNetworkMessage message={"Failed to load data"} />;
 	}
 
-  const debouncedLoadDesigners = useCallback(
-    debounce((newPage:any, newRowsPerPage: any) => {
+	const debouncedLoadDesigners = useCallback(
+		debounce((newPage: any, newRowsPerPage: any) => {
 			// @ts-ignore
-      dispatch(getDesigners({ page: newPage + 1, limit: newRowsPerPage }));
-    }, 300),
-    [dispatch]
-  );
+			dispatch(getDesigners({ page: newPage + 1, limit: newRowsPerPage }));
+		}, 300),
+		[dispatch]
+	);
 
-	const handleChangePage = (_:never, newPage: number) => {
-    setPage(newPage);
-    debouncedLoadDesigners(newPage, rowsPerPage);
-  };
+	const handleChangePage = (_: never, newPage: number) => {
+		setPage(newPage);
+		debouncedLoadDesigners(newPage, rowsPerPage);
+	};
 
 	const handleRequestSort = (property: "username" | "email") => {
 		const isAsc = orderBy === property && order === "asc";
@@ -108,4 +114,4 @@ const DesignerTable: React.FC = () => {
 	);
 };
 
-export default DesignerTable;
+export default memo(DesignerTable);

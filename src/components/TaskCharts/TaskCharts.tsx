@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../../store/store";
 import { getTasks } from "../../store/slices/tasksSlice";
@@ -16,19 +16,29 @@ const TaskChart: React.FC = () => {
 	const status = useSelector((state: RootState) => state.tasks.status);
 	const [numOfWeeks, setNumOfWeeks] = useState(8);
 
-  useEffect(() => {
-    if (status === 'idle' && (!allTasks || allTasks.length === 0)) {
-      dispatch(getTasks());
-    }
-  }, [dispatch, status, allTasks]);
+	useEffect(() => {
+		if (status === "idle" && (!allTasks || allTasks.length === 0)) {
+			console.log("get tasks");
+			dispatch(getTasks());
+		}
+	}, [dispatch, status, allTasks]);
 
-	if (status === 'failed') {
+	if (status === "failed") {
 		return <ErrorNetworkMessage message={"Failed to load data"} />;
 	}
 
-	const closedTasks = allTasks.filter((task: any) => task.status === "Done");
-	const data = processData(closedTasks, numOfWeeks);
-	const statusData = getStatusData(allTasks);
+	const closedTasks = useMemo(() => {
+	
+		return allTasks.filter((task: any) => task.status === "Done");
+	}, [allTasks]);
+
+	const data = useMemo(() => {
+		return processData(closedTasks, numOfWeeks);
+	}, [closedTasks, numOfWeeks]);
+
+	const statusData = useMemo(() => {
+		return getStatusData(allTasks);
+	}, [allTasks]);
 
 	return (
 		<Box p={2}>
@@ -39,24 +49,18 @@ const TaskChart: React.FC = () => {
 				alignItems={"center"}
 			>
 				<Grid>
-				{status === 'loading' ? (
-          <LineChartSkeleton />
-        ) : (
-          <LineChartComponent
-            data={data}
-            numOfWeeks={numOfWeeks}
-            setNumOfWeeks={setNumOfWeeks}
-          />
-        )}
+					{status === "loading" ? (
+						<LineChartSkeleton />
+					) : (
+						<LineChartComponent
+							data={data}
+							numOfWeeks={numOfWeeks}
+							setNumOfWeeks={setNumOfWeeks}
+						/>
+					)}
 				</Grid>
 
-				<Grid>
-				{status === 'loading' ? (
-          <PieChartSkeleton />
-        ) : (
-          <PieChartComponent data={statusData} />
-        )}
-				</Grid>
+				<Grid>{status === "loading" ? <PieChartSkeleton /> : <PieChartComponent data={statusData} />}</Grid>
 			</Grid>
 		</Box>
 	);

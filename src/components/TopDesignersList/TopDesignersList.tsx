@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../../store/store";
-import { getDesigners } from "../../store/slices/designersSlice";
+import { getTopDesigners } from "../../store/slices/topDesignersSlice";
 import { List, ListItem, Avatar, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
@@ -12,21 +12,21 @@ import ErrorNetworkMessage from "../ErrorNetworkMessage/ErrorNetworkMessage";
 const TopDesignersList: React.FC = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
-  const designers = useSelector((state: RootState) => state.designers.list);
-  const status = useSelector((state: RootState) => state.designers.status);
+  const topDesigners = useSelector((state: RootState) => state.topDesigners.list);
+  const status = useSelector((state: RootState) => state.topDesigners.status);
 
   useEffect(() => {
-    if (status === 'idle' && (!designers.results || designers.results.length === 0)) {
+    if (status === 'idle' && (!topDesigners.results || topDesigners.results.length === 0)) {
       //@ts-ignore
-      dispatch(getDesigners({ page: 1, limit: 10 }));
+      dispatch(getTopDesigners({ page: 1, limit: 10 }));
     }
-  }, [dispatch, status, designers.results]);
+  }, [dispatch, status, topDesigners.results]);
 
   if (status === "loading") {
     return <TopDesignersListItemSkeleton count={5} />;
   }
 
-  if (!designers.results) return null;
+  if (!topDesigners.results) return null;
 
   if (status === "failed") {
     return <ErrorNetworkMessage message={"Failed to load designers"} />;
@@ -65,7 +65,7 @@ const TopDesignersList: React.FC = () => {
     }
   };
 
-  const sortedDesigners = designers.results
+  const sortedDesigners = topDesigners.results
     .map((designer: any) => {
       const { medianTime, completedTasksCount } = analyzeTasks(designer.issues);
       return { ...designer, medianTime, completedTasksCount };
