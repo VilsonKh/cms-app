@@ -6,7 +6,9 @@ import Routes from "./routes/routes";
 import "./locales/i18n";
 import { ThemeProvider as MuiThemeProvider, createTheme } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
-import { ThemeContext, ThemeProvider } from "./themeContext/themeContext";
+import { ThemeProvider } from "./themeContext/themeContext";
+import { ThemeContext } from "./themeContext/themeContext";
+import CommentsList from "./components/CommentsList/CommentsList";
 
 const darkTheme = createTheme({
 	palette: {
@@ -37,6 +39,8 @@ const App: React.FC = () => {
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
 	<ThemeProvider>
-		<App />
+		<Provider store={store}>
+			<App />
+		</Provider>
 	</ThemeProvider>
 );

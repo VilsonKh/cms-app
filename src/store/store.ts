@@ -3,7 +3,8 @@ import commentsReducer from './slices/commentsSlice';
 import designersReducer from './slices/designersSlice';
 import tasksReducer from './slices/tasksSlice';
 
-export const store = configureStore({
+
+export const store: any = configureStore({
   reducer: {
     comments: commentsReducer,
     designers: designersReducer,

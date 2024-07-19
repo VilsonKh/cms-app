@@ -5,6 +5,7 @@ import { getComments } from "../../store/slices/commentsSlice";
 import { List } from "@mui/material";
 import CommentsListItem from "./CommentsListItem/CommentsListItem";
 import CommentsListItemSkeleton from "./CommentsListItemSkeleton";
+import ErrorNetworkMessage from "../ErrorNetworkMessage/ErrorNetworkMessage";
 const CommentsList: React.FC = () => {
 	const dispatch = useDispatch<AppDispatch>();
 	const comments = useSelector((state: RootState) => state.comments.latest);
@@ -17,6 +18,10 @@ const CommentsList: React.FC = () => {
 	const sortedComments = [...comments].sort((a, b) => {
     return new Date(b.date_created).getTime() - new Date(a.date_created).getTime();
   });
+
+	if (status === "failed") {
+		return <ErrorNetworkMessage message={"Failed to load comments"} />;
+	}
 
 	return (
 		<List>

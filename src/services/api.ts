@@ -24,7 +24,8 @@ export const fetchDesigners = async (params: { page?: number; limit?: number }) 
       },
     });
 
-    console.log(response.data)
+
+
     return response.data;
   } catch (error) {
     console.error('Error fetching designers:', error);
@@ -40,7 +41,7 @@ export const fetchTasks = async (params?: any) => {
         ...params,
       },
     });
-    console.log(response.data)
+
     return response.data;
   } catch (error) {
     console.error('Error fetching tasks:', error);

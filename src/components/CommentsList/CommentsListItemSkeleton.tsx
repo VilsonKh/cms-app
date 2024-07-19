@@ -6,7 +6,6 @@ interface SkeletonListProps {
 }
 
 const SkeletonList: React.FC<SkeletonListProps> = ({ count }) => {
-console.log([new Array(count)])
   return (
     <>
       {[...new Array(count)].map((_, index) => (

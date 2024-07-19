@@ -32,7 +32,6 @@ const CommentsListItem: React.FC<CommentListItemProps> = ({ comment }) => {
     const distance = formatDistanceToNowStrict(commentDate, { addSuffix: true, locale });
     
     return distance.replace(/(\d+)\s(\w+)/, (_, number, unit) => {
-      console.log(unit)
       return t(`time.${unit}`, { count: number });
     });
   };

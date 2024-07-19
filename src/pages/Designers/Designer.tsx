@@ -8,7 +8,7 @@ const Designers: React.FC = () => {
   return (
     <Container>
       <Typography variant="h4" gutterBottom>
-        {t('Designers')}
+        {t('designers.designers')}
       </Typography>
       <DesignerTable />
     </Container>

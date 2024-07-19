@@ -2,7 +2,7 @@ import { Skeleton, TableCell, TableRow } from "@mui/material";
 
 const TableSkeleton = ({rows}: {rows: number}) => {
 	return (
-		<>
+		<tbody>
 			{[... new Array(rows)].map((_, index) => (
 				<TableRow key={index}>
 					<TableCell>
@@ -26,7 +26,7 @@ const TableSkeleton = ({rows}: {rows: number}) => {
 					</TableCell>
 				</TableRow>
 			))}
-		</>
+		</tbody>
 	);
 };
 

@@ -6,6 +6,7 @@ import { Table, TableContainer, Paper, TablePagination } from "@mui/material";
 import DesignerTableHead from "./DesignerTableHead/DesignerTableHead";
 import DesignerTableBody from "./DesignerTableBody/DesignerTableBody";
 import { useTranslation } from "react-i18next";
+import ErrorNetworkMessage from "../ErrorNetworkMessage/ErrorNetworkMessage";
 
 const debounce = (func: Function, wait: number)=> {
   let timeout: any;
@@ -32,6 +33,10 @@ const DesignerTable: React.FC = () => {
 		// @ts-ignore
 		if (status === "idle" && (!designers.results || designers.results.length === 0)) dispatch(getDesigners({ page: page + 1, limit: rowsPerPage }));
 	}, [dispatch, page, rowsPerPage]);
+
+	if (status === "failed") {
+		return <ErrorNetworkMessage message={"Failed to load data"} />;
+	}
 
   const debouncedLoadDesigners = useCallback(
     debounce((newPage:any, newRowsPerPage: any) => {
@@ -60,7 +65,7 @@ const DesignerTable: React.FC = () => {
 
 	const sortData = (data: typeof designers.results) => {
 		if (!data) return [];
-		return data.slice().sort((a, b) => {
+		return data.slice().sort((a: any, b: any) => {
 			if (orderBy) {
 				if (order === "asc") {
 					return a[orderBy] < b[orderBy] ? -1 : 1;
@@ -93,8 +98,8 @@ const DesignerTable: React.FC = () => {
 				component="div"
 				count={designers.count || 0}
 				rowsPerPage={rowsPerPage}
-				labelRowsPerPage={t("Rows Per Page")}
-				labelDisplayedRows={({ from, to, count }) => `${from}-${to} ${t("of")} ${count !== -1 ? count : `more than ${to}`}`}
+				labelRowsPerPage={t("designers.rowsPerPage")}
+				labelDisplayedRows={({ from, to, count }) => `${from}-${to} ${t("designers.of")} ${count !== -1 ? count : `more than ${to}`}`}
 				page={page}
 				onPageChange={handleChangePage as any}
 				onRowsPerPageChange={handleChangeRowsPerPage}

@@ -8,6 +8,7 @@ import LineChartComponent from "./LineChartComponent/LineChartComponent";
 import PieChartComponent from "./PieChartComponent/PieChartComponent";
 import LineChartSkeleton from "./LineChartComponent/LineChartSkeleton";
 import PieChartSkeleton from "./PieChartComponent/PieChartSkeleton";
+import ErrorNetworkMessage from "../ErrorNetworkMessage/ErrorNetworkMessage";
 
 const TaskChart: React.FC = () => {
 	const dispatch = useDispatch<AppDispatch>();
@@ -17,16 +18,17 @@ const TaskChart: React.FC = () => {
 
   useEffect(() => {
     if (status === 'idle' && (!allTasks || allTasks.length === 0)) {
-			console.log('send request')
       dispatch(getTasks());
     }
   }, [dispatch, status, allTasks]);
 
+	if (status === 'failed') {
+		return <ErrorNetworkMessage message={"Failed to load data"} />;
+	}
+
 	const closedTasks = allTasks.filter((task: any) => task.status === "Done");
 	const data = processData(closedTasks, numOfWeeks);
 	const statusData = getStatusData(allTasks);
-
-	console.log(data)
 
 	return (
 		<Box p={2}>

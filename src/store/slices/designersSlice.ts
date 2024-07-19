@@ -23,7 +23,7 @@ const initialState: DesignersState = {
 };
 
 export const getDesigners = createAsyncThunk<Designer[]>('designers/getDesigners', async (params: any) => {
-  console.log(params)
+
 
   const response = await fetchDesigners(params);
   return response;

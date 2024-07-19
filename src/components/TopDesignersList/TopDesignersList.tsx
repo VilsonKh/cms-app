@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 
 import { convertHours } from "../../utils/dateHelpers";
 import TopDesignersListItemSkeleton from "./TopDesignersListItemSkeleton";
+import ErrorNetworkMessage from "../ErrorNetworkMessage/ErrorNetworkMessage";
 
 const TopDesignersList: React.FC = () => {
   const { t } = useTranslation();
@@ -16,7 +17,7 @@ const TopDesignersList: React.FC = () => {
 
   useEffect(() => {
     if (status === 'idle' && (!designers.results || designers.results.length === 0)) {
-      // @ts-ignore
+      //@ts-ignore
       dispatch(getDesigners({ page: 1, limit: 10 }));
     }
   }, [dispatch, status, designers.results]);
@@ -26,6 +27,10 @@ const TopDesignersList: React.FC = () => {
   }
 
   if (!designers.results) return null;
+
+  if (status === "failed") {
+    return <ErrorNetworkMessage message={"Failed to load designers"} />;
+  }
 
   const analyzeTasks = (tasks: { status: string; date_created: string }[]) => {
     if (!tasks) return { medianTime: 0, completedTasksCount: 0 };
@@ -61,11 +66,11 @@ const TopDesignersList: React.FC = () => {
   };
 
   const sortedDesigners = designers.results
-    .map((designer) => {
+    .map((designer: any) => {
       const { medianTime, completedTasksCount } = analyzeTasks(designer.issues);
       return { ...designer, medianTime, completedTasksCount };
     })
-    .sort((a, b) => {
+    .sort((a: any, b: any) => {
       if (a.medianTime !== b.medianTime) {
         return a.medianTime - b.medianTime;
       }
@@ -74,12 +79,15 @@ const TopDesignersList: React.FC = () => {
 
   return (
     <List>
-      {sortedDesigners.map((designer, index) => (
-        <ListItem key={designer.id}>
+      {sortedDesigners.map((designer: any, index: any) => (
+        <ListItem key={designer.username} style={{ display: 'flex', alignItems: 'center' }}>
+          <Typography variant="h6" style={{ minWidth: 30, textAlign: 'right', marginRight: 16 }}>
+            {index + 1}.
+          </Typography>
           <Avatar src={designer.avatar} />
           <div style={{ marginLeft: 16 }}>
             <Typography variant="body1">
-              {index + 1}. {designer.username}
+              {designer.username}
             </Typography>
             <Typography variant="body2" color="textSecondary">
               {t("designers.medianTime")}: {convertHours(designer.medianTime, t)} - {t("designers.completedTasks")}: {designer.completedTasksCount}

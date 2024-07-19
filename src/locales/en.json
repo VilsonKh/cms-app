@@ -20,7 +20,9 @@
       "tasksInProgress": "Tasks In Progress",
       "medianTime": "Median time",
       "completedTasks": "Completed tasks",
-      "designers": "designers"
+      "designers": "Designers",
+      "rowsPerPage": "Rows Per Page",
+      "of": "of"
     },
     "tasks": {
       "overview": "Tasks Overview",

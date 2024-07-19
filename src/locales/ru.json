@@ -20,7 +20,9 @@
       "tasksInProgress": "В процессе",
       "medianTime": "Медианное время",
       "completedTasks": "Завершенные задачи",
-      "designers": "дизайнеры"
+      "designers": "Дизайнеры",
+      "rowsPerPage": "Строк на странице",
+      "of": "из"
     },
     "tasks": {
       "overview": "Обзор задач",

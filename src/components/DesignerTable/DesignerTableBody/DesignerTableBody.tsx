@@ -27,7 +27,7 @@ const DesignerTableBody: React.FC<DesignerTableBodyProps> = ({ data, loading, ro
   return (
     <TableBody>
       {data.map((designer) => (
-        <DesignerTableRow key={designer.id} designer={designer} />
+        <DesignerTableRow key={designer.username} designer={designer} />
       ))}
     </TableBody>
   );
